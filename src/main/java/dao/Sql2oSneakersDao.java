@@ -46,7 +46,12 @@ public class Sql2oSneakersDao implements SneakersDao {
 
     @Override
     public Sneakers findSneakerById(int id) {
-        return null;
+        try(Connection con = sql2o.open()){
+            return con.createQuery("SELECT * FROM shoes WHERE id = :id")
+                    .addParameter("id", id)
+                    .throwOnMappingFailure(false)
+                    .executeAndFetchFirst(Sneakers.class);
+        }
     }
 
     @Override
@@ -61,6 +66,11 @@ public class Sql2oSneakersDao implements SneakersDao {
 
     @Override
     public void deleteSneakerbyId(int id) {
-
+        try(Connection con = sql2o.open()){
+             con.createQuery("DELETE FROM shoes WHERE id = :id")
+                    .addParameter("id", id)
+                    .throwOnMappingFailure(false)
+                    .executeUpdate();
+        }
     }
 }

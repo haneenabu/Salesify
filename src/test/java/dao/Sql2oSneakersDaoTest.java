@@ -16,6 +16,7 @@ import static org.junit.Assert.*;
  */
 public class Sql2oSneakersDaoTest {
     private Sql2oSneakersDao sneakersDao;
+    private Sql2oShoesDao shoesDao;
     private Connection con;
 
     @Before
@@ -23,6 +24,7 @@ public class Sql2oSneakersDaoTest {
         String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
         Sql2o sql2o = new Sql2o(connectionString,"","");
         sneakersDao = new Sql2oSneakersDao(sql2o);
+        shoesDao = new Sql2oShoesDao(sql2o);
         con = sql2o.open();
     }
 
@@ -51,11 +53,16 @@ public class Sql2oSneakersDaoTest {
 
     @Test
     public void findSneakerById() throws Exception {
-
+        Sneakers sneaker1 = newSneaks();
+        sneakersDao.add(sneaker1);
+        int id = sneaker1.getId();
+        Sneakers finder = sneakersDao.findSneakerById(id);
+        assertEquals(sneaker1.getShoeColor(), finder.getShoeColor());
     }
 
     @Test
     public void updateSneakers() throws Exception {
+
     }
 
     @Test
@@ -64,6 +71,12 @@ public class Sql2oSneakersDaoTest {
 
     @Test
     public void deleteSneakerbyId() throws Exception {
+        Sneakers sneaker1 = newSneaks();
+        sneakersDao.add(sneaker1);
+        int id = sneaker1.getId();
+        System.out.println(shoesDao.getAll().size());
+        sneakersDao.deleteSneakerbyId(id);
+        assertEquals(0, shoesDao.getAll().size());
     }
 
     public Sneakers newSneaks(){

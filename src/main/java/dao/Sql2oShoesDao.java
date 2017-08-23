@@ -38,6 +38,7 @@ public class Sql2oShoesDao implements ShoesDao{
         String query = "SELECT * FROM shoes";
         try (Connection con = sql2o.open()) {
             return con.createQuery(query)
+                    .throwOnMappingFailure(false)
                     .executeAndFetch(Shoes.class);
         }
     }
