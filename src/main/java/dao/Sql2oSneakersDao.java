@@ -60,7 +60,14 @@ public class Sql2oSneakersDao implements SneakersDao {
     }
 
     @Override
-    public void deleteAllSneakers() {
+    public void deleteAllSneakers(String sneakerType) {
+        String query = "DELETE FROM shoes WHERE sneakerType = :sneakerType";
+        try (Connection con = sql2o.open()){
+            con.createQuery(query)
+                    .addParameter("sneakerType", sneakerType)
+                    .throwOnMappingFailure(false)
+                    .executeUpdate();
+        }
 
     }
 

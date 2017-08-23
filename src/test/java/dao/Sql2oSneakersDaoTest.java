@@ -1,5 +1,6 @@
 package dao;
 
+import models.Shoes;
 import models.Sneakers;
 import org.junit.After;
 import org.junit.Before;
@@ -67,6 +68,16 @@ public class Sql2oSneakersDaoTest {
 
     @Test
     public void deleteAllSneakers() throws Exception {
+        Sneakers sneaker1 = newSneaks();
+        Sneakers sneaker2 = newSneaks();
+        sneakersDao.add(sneaker1);
+        sneakersDao.add(sneaker2);
+        Shoes shoes = new Shoes("Nike", "Black", 9.5, 100);
+        shoesDao.add(shoes);
+        String sneakertype = sneaker1.getSneakerType();
+        sneakersDao.deleteAllSneakers(sneakertype);
+        assertEquals(1, shoesDao.getAll().size());
+        assertEquals(0, sneakersDao.getAll(sneakertype).size());
     }
 
     @Test

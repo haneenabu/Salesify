@@ -21,7 +21,7 @@ public interface SneakersDao {
     void updateSneakers(String brand, String shoeColor, double size, double price, int id);
 
     //delete
-    void deleteAllSneakers();
+    void deleteAllSneakers(String sneakerType);
 
     void deleteSneakerbyId(int id);
 
