@@ -24,37 +24,67 @@ public class Sql2oShoesDao implements ShoesDao{
         try(Connection con = sql2o.open()){
             int id = (int) con.createQuery(query)
                     .bind(shoes)
+                    .throwOnMappingFailure(false)
                     .executeUpdate()
                     .getKey();
             shoes.setId(id);
         }catch (Sql2oException ex){
             System.out.println(ex);
         }
-
     }
 
     @Override
     public List<Shoes> getAll() {
-        return null;
+        String query = "SELECT * FROM shoes";
+        try (Connection con = sql2o.open()) {
+            return con.createQuery(query)
+                    .executeAndFetch(Shoes.class);
+        }
     }
 
     @Override
     public Shoes findById(int id) {
-        return null;
+        String query = "SELECT * FROM shoes WHERE id = :id";
+        try(Connection con = sql2o.open()){
+            return con.createQuery(query)
+                    .addParameter("id", id)
+                    .executeAndFetchFirst(Shoes.class);
+        }
     }
 
     @Override
-    public Shoes update(String brand, String shoeColor, double size, double price, int id) {
-        return null;
+    public void update(String brand, String shoeColor, double shoeSize, double price, int id) {
+        String query = "UPDATE shoes SET (brand, shoeColor, shoeSize, price) = (:brand, :shoeColor, :shoeSize, :price)";
+        try (Connection con = sql2o.open()){
+            con.createQuery(query)
+                    .addParameter("brand", brand)
+                    .addParameter("shoeColor", shoeColor)
+                    .addParameter("shoeSize", shoeSize)
+                    .addParameter("price", price)
+                    .executeUpdate();
+        }catch (Exception ex){
+            System.out.println(ex);
+        }
     }
 
     @Override
     public void deleteAll() {
-
+        try(Connection con = sql2o.open()){
+            con.createQuery("DELETE FROM shoes")
+                    .executeUpdate();
+        }catch (Exception ex){
+            System.out.println(ex);
+        }
     }
 
     @Override
     public void delete(int id) {
-
+        try(Connection con = sql2o.open()){
+            con.createQuery("DELETE FROM shoes WHERE id = :id")
+                    .addParameter("id", id)
+                    .executeUpdate();
+        }catch (Sql2oException ex){
+            System.out.println(ex);
+        }
     }
 }

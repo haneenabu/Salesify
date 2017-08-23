@@ -6,5 +6,8 @@ CREATE TABLE IF NOT EXISTS shoes(
     shoeColor VARCHAR,
     shoeSize DOUBLE,
     price DOUBLE,
+    sneakerType VARCHAR,
+    hikingType VARCHAR,
+    laces BOOLEAN,
     createdAt TIMESTAMP
 );

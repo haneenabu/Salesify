@@ -17,7 +17,7 @@ public interface ShoesDao {
     Shoes findById(int id);
 
     //update
-    Shoes update(String brand, String shoeColor, double size, double price, int id);
+    void update(String brand, String shoeColor, double size, double price, int id);
 
     //delete
     void deleteAll();

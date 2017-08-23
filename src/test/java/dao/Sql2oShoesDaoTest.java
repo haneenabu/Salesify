@@ -8,6 +8,8 @@ import org.sql2o.Sql2o;
 
 import org.sql2o.Connection;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 
@@ -38,25 +40,59 @@ public class Sql2oShoesDaoTest {
 
     @Test
     public void getAll() throws Exception {
+        Shoes newShoes = newShoes();
+        Shoes otherShoes =  otherShoes();
+        shoesDao.add(newShoes);
+        shoesDao.add(otherShoes);
+        List<Shoes> newList = shoesDao.getAll();
+        assertEquals(2, newList.size());
     }
 
     @Test
     public void findById() throws Exception {
+        Shoes newShoes = newShoes();
+        Shoes otherShoes =  otherShoes();
+        shoesDao.add(newShoes);
+        shoesDao.add(otherShoes);
+        int id = newShoes.getId();
+        Shoes find = shoesDao.findById(id);
+        assertEquals(newShoes.getBrand(), find.getBrand());
     }
 
     @Test
     public void update() throws Exception {
+        Shoes newShoes = newShoes();
+        shoesDao.add(newShoes);
+        int id = newShoes.getId();
+        shoesDao.update("test", "pink", 7, 6400, id);
+        assertNotEquals("Nike", shoesDao.findById(id).getBrand());
     }
 
     @Test
     public void deleteAll() throws Exception {
+        Shoes newShoes = newShoes();
+        Shoes otherShoes =  otherShoes();
+        shoesDao.add(newShoes);
+        shoesDao.add(otherShoes);
+        shoesDao.deleteAll();
+        assertEquals(0, shoesDao.getAll().size());
     }
 
     @Test
     public void delete() throws Exception {
+        Shoes newShoes = newShoes();
+        Shoes otherShoes =  otherShoes();
+        shoesDao.add(newShoes);
+        shoesDao.add(otherShoes);
+        int deleteId = newShoes.getId();
+        shoesDao.delete(deleteId);
+        assertEquals(1, shoesDao.getAll().size());
     }
 
     public Shoes newShoes(){
-        return new Shoes("Nike", "pizza", 9, 100);
+        return new Shoes("Nike", "pizza", 9.5, 100);
+    }
+    public Shoes otherShoes(){
+        return new Shoes("Adidas", "grey", 8.5, 100);
     }
 }
