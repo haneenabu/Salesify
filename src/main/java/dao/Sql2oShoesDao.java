@@ -49,6 +49,7 @@ public class Sql2oShoesDao implements ShoesDao{
         try(Connection con = sql2o.open()){
             return con.createQuery(query)
                     .addParameter("id", id)
+                    .throwOnMappingFailure(false)
                     .executeAndFetchFirst(Shoes.class);
         }
     }

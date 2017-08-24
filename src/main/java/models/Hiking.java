@@ -4,8 +4,8 @@ package models;
 public class Hiking extends Shoes {
     private String hikingType;
 
-    public Hiking(String brand, String shoeColor, Float size, Float price, String hikingType) {
-        super(brand, shoeColor, size, price);
+    public Hiking(String brand, String shoeColor, double shoeSize, double price, String hikingType) {
+        super(brand, shoeColor, shoeSize, price);
         this.hikingType = hikingType;
     }
     //GETTER

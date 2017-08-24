@@ -63,6 +63,13 @@ public class Sql2oSneakersDaoTest {
 
     @Test
     public void updateSneakers() throws Exception {
+        Sneakers sneaker = newSneaks();
+        Sneakers sneaker1 = newSneaks();
+        sneakersDao.add(sneaker);
+        sneakersDao.add(sneaker1);
+        int id = sneaker.getId();
+        sneakersDao.updateSneakers("New Balances","Ugly", 9,300, true,"high top", id);
+        assertEquals("New Balances", shoesDao.findById(id).getBrand());
 
     }
 

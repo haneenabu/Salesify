@@ -1,7 +1,6 @@
 package dao;
 
-import models.Shoes;
-import models.Sneakers;
+import models.Hiking;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
@@ -9,63 +8,63 @@ import org.sql2o.Sql2oException;
 import java.util.List;
 
 /**
- * Created by Guest on 8/23/17.
+ * Created by Guest on 8/24/17.
  */
-public class Sql2oSneakersDao implements SneakersDao {
+public class Sql2oHikingDao implements HikingDao {
     private final Sql2o sql2o;
 
-    public Sql2oSneakersDao (Sql2o sql2o){
+    public Sql2oHikingDao (Sql2o sql2o){
         this.sql2o = sql2o;
     }
 
     @Override
-    public void add(Sneakers sneakers) {
-        String query = "INSERT INTO shoes (brand, shoeColor, shoeSize, price, laces, sneakerType) VALUES (:brand, :shoeColor, :shoeSize, :price, :laces, :sneakerType)";
+    public void add(Hiking hiking) {
+        String query = "INSERT INTO shoes (brand, shoeColor, shoeSize, price, hikingType) VALUES (:brand, :shoeColor, :shoeSize, :price, :hikingType)";
         try(Connection con = sql2o.open()){
-            int id = (int) con.createQuery(query)
-                    .bind(sneakers)
+            int id= (int)con.createQuery(query)
+                    .bind(hiking)
                     .throwOnMappingFailure(false)
                     .executeUpdate()
                     .getKey();
-            sneakers.setId(id);
-        }catch (Sql2oException ex){
+            hiking.setId(id);
+        } catch (Sql2oException ex){
             System.out.println(ex);
         }
     }
 
     @Override
-    public List<Sneakers> getAll(String sneakerType) {
-        String query = "SELECT * FROM shoes WHERE sneakerType = :sneakerType";
+    public List<Hiking> getAll(String hikingType) {
+        String query = "SELECT * FROM shoes WHERE hikingType = :hikingType";
         try(Connection con = sql2o.open()){
             return con.createQuery(query)
-                    .addParameter("sneakerType", sneakerType)
+                    .addParameter("hikingType", hikingType)
                     .throwOnMappingFailure(false)
-                    .executeAndFetch(Sneakers.class);
+                    .executeAndFetch(Hiking.class);
         }
     }
 
     @Override
-    public Sneakers findSneakerById(int id) {
+    public Hiking findHikingById(int id) {
         try(Connection con = sql2o.open()){
             return con.createQuery("SELECT * FROM shoes WHERE id = :id")
                     .addParameter("id", id)
                     .throwOnMappingFailure(false)
-                    .executeAndFetchFirst(Sneakers.class);
+                    .executeAndFetchFirst(Hiking.class);
         }
     }
 
     @Override
-    public void updateSneakers(String brand, String shoeColor, double shoeSize, double price, boolean laces, String sneakerType, int id) {
-        String query = "UPDATE shoes SET (brand, shoeColor, shoeSize, price, laces, sneakerType) = (:brand, :shoeColor, :shoeSize, :price, :laces, :sneakerType)WHERE id = :id";
+    public void updateHikingShoes(String brand, String shoeColor, double shoeSize, double price, String hikingType, int id) {
+        String query = "UPDATE shoes SET (brand, shoeColor, shoeSize, price, hikingType) = (:brand, :shoeColor, :shoeSize, :price, :hikingType)WHERE id = :id";
         try (Connection con = sql2o.open()){
             con.createQuery(query)
                     .addParameter("brand", brand)
                     .addParameter("shoeColor", shoeColor)
                     .addParameter("shoeSize", shoeSize)
                     .addParameter("price", price)
-                    .addParameter("laces", laces)
-                    .addParameter("sneakerType", sneakerType)
+                    .addParameter("hikingType", hikingType)
                     .addParameter("id", id)
+                    .throwOnMappingFailure(false)
                     .executeUpdate();
         }catch (Exception ex){
             System.out.println(ex);
@@ -73,21 +72,20 @@ public class Sql2oSneakersDao implements SneakersDao {
     }
 
     @Override
-    public void deleteAllSneakers(String sneakerType) {
-        String query = "DELETE FROM shoes WHERE sneakerType = :sneakerType";
+    public void deleteAllHikingByType(String hikingType) {
+        String query = "DELETE FROM shoes WHERE hikingType = :hikingType";
         try (Connection con = sql2o.open()){
             con.createQuery(query)
-                    .addParameter("sneakerType", sneakerType)
+                    .addParameter("hikingType", hikingType)
                     .throwOnMappingFailure(false)
                     .executeUpdate();
         }
-
     }
 
     @Override
-    public void deleteSneakerbyId(int id) {
+    public void deleteHikingbyId(int id) {
         try(Connection con = sql2o.open()){
-             con.createQuery("DELETE FROM shoes WHERE id = :id")
+            con.createQuery("DELETE FROM shoes WHERE id = :id")
                     .addParameter("id", id)
                     .throwOnMappingFailure(false)
                     .executeUpdate();
