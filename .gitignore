@@ -51,6 +51,8 @@ hs_err_pid*
 /build/
 .idea/
 gradlew.bat
+gradlew
+settings.gradle
 gradle/
 
 # Ignore Gradle GUI config
