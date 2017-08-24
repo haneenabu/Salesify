@@ -13,7 +13,7 @@ public interface SneakersDao {
     void add (Sneakers sneakers);
 
     //read
-    List<Sneakers> getAll(String sneakerType);
+    List<Sneakers> getAll();
 
     Sneakers findSneakerById(int id);
 

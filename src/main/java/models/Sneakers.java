@@ -7,8 +7,8 @@ public class Sneakers extends Shoes {
     private boolean laces;
     private String sneakerType;
 
-    public Sneakers(String brand, String shoeColor, double size, double price, boolean laces, String sneakerType) {
-        super(brand, shoeColor, size, price);
+    public Sneakers(String brand, String shoeColor, double shoeSize, double price, boolean laces, String sneakerType, String type) {
+        super(brand, shoeColor, shoeSize, price, type);
         this.laces = laces;
         this.sneakerType = sneakerType;
     }

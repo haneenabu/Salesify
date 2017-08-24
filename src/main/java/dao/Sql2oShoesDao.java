@@ -20,7 +20,7 @@ public class Sql2oShoesDao implements ShoesDao{
 
     @Override
     public void add(Shoes shoes) {
-        String query = "INSERT INTO shoes (brand, shoeColor, shoeSize, price) VALUES (:brand, :shoeColor, :shoeSize, :price)";
+        String query = "INSERT INTO shoes (brand, shoeColor, shoeSize, price, type) VALUES (:brand, :shoeColor, :shoeSize, :price, :type)";
         try(Connection con = sql2o.open()){
             int id = (int) con.createQuery(query)
                     .bind(shoes)

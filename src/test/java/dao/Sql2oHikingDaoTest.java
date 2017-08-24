@@ -48,7 +48,7 @@ public class Sql2oHikingDaoTest {
         Hiking hiking1 = newHike();
         hikingDao.add(hiking);
         hikingDao.add(hiking1);
-        List<Hiking> hikingList = hikingDao.getAll(hiking.getHikingType());
+        List<Hiking> hikingList = hikingDao.getAll();
         assertEquals(2, hikingList.size());
     }
 
@@ -79,12 +79,12 @@ public class Sql2oHikingDaoTest {
         Hiking hiking2 = newHike();
         hikingDao.add(hiking1);
         hikingDao.add(hiking2);
-        Shoes shoes = new Shoes("Nike", "Black", 9.5, 100);
+        Shoes shoes = new Shoes("Nike", "Black", 9.5, 100, "shoes");
         shoesDao.add(shoes);
         String hikingType = hiking1.getHikingType();
         hikingDao.deleteAllHikingByType(hikingType);
         assertEquals(1, shoesDao.getAll().size());
-        assertEquals(0, hikingDao.getAll(hikingType).size());
+        assertEquals(0, hikingDao.getAll().size());
     }
 
     @Test
@@ -98,7 +98,7 @@ public class Sql2oHikingDaoTest {
     }
 
     public Hiking newHike(){
-        return new Hiking("Nike", "Tacos", 9.5, 200.0,  "Approach");
+        return new Hiking("Nike", "Tacos", 9.5, 200.0,  "Approach", "hiking");
     }
 
 }

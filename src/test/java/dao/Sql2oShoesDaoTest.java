@@ -90,9 +90,9 @@ public class Sql2oShoesDaoTest {
     }
 
     public Shoes newShoes(){
-        return new Shoes("Nike", "pizza", 9.5, 100);
+        return new Shoes("Nike", "pizza", 9.5, 100, "shoes");
     }
     public Shoes otherShoes(){
-        return new Shoes("Adidas", "grey", 8.5, 100);
+        return new Shoes("Adidas", "grey", 8.5, 100, "shoes");
     }
 }

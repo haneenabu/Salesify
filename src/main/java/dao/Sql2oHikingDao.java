@@ -19,7 +19,7 @@ public class Sql2oHikingDao implements HikingDao {
 
     @Override
     public void add(Hiking hiking) {
-        String query = "INSERT INTO shoes (brand, shoeColor, shoeSize, price, hikingType) VALUES (:brand, :shoeColor, :shoeSize, :price, :hikingType)";
+        String query = "INSERT INTO shoes (brand, shoeColor, shoeSize, price, hikingType, type) VALUES (:brand, :shoeColor, :shoeSize, :price, :hikingType, :type)";
         try(Connection con = sql2o.open()){
             int id= (int)con.createQuery(query)
                     .bind(hiking)
@@ -33,11 +33,11 @@ public class Sql2oHikingDao implements HikingDao {
     }
 
     @Override
-    public List<Hiking> getAll(String hikingType) {
-        String query = "SELECT * FROM shoes WHERE hikingType = :hikingType";
+    public List<Hiking> getAll() {
+        String query = "SELECT * FROM shoes WHERE type = :type";
         try(Connection con = sql2o.open()){
             return con.createQuery(query)
-                    .addParameter("hikingType", hikingType)
+                    .addParameter("type", "hiking")
                     .throwOnMappingFailure(false)
                     .executeAndFetch(Hiking.class);
         }

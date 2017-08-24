@@ -20,7 +20,7 @@ public class Sql2oSneakersDao implements SneakersDao {
 
     @Override
     public void add(Sneakers sneakers) {
-        String query = "INSERT INTO shoes (brand, shoeColor, shoeSize, price, laces, sneakerType) VALUES (:brand, :shoeColor, :shoeSize, :price, :laces, :sneakerType)";
+        String query = "INSERT INTO shoes (brand, shoeColor, shoeSize, price, laces, sneakerType, type) VALUES (:brand, :shoeColor, :shoeSize, :price, :laces, :sneakerType, :type)";
         try(Connection con = sql2o.open()){
             int id = (int) con.createQuery(query)
                     .bind(sneakers)
@@ -34,11 +34,11 @@ public class Sql2oSneakersDao implements SneakersDao {
     }
 
     @Override
-    public List<Sneakers> getAll(String sneakerType) {
-        String query = "SELECT * FROM shoes WHERE sneakerType = :sneakerType";
+    public List<Sneakers> getAll() {
+        String query = "SELECT * FROM shoes WHERE type = :type";
         try(Connection con = sql2o.open()){
             return con.createQuery(query)
-                    .addParameter("sneakerType", sneakerType)
+                    .addParameter("type", "sneakers")
                     .throwOnMappingFailure(false)
                     .executeAndFetch(Sneakers.class);
         }

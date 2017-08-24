@@ -9,7 +9,7 @@ public interface HikingDao {
     void add (Hiking hiking);
 
     //read
-    List<Hiking> getAll(String hikingType);
+    List<Hiking> getAll();
 
     Hiking findHikingById(int id);
 

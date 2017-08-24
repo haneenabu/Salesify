@@ -48,7 +48,7 @@ public class Sql2oSneakersDaoTest {
         Sneakers sneaker1 = newSneaks();
         sneakersDao.add(sneaker);
         sneakersDao.add(sneaker1);
-        List<Sneakers> sneakerList = sneakersDao.getAll(sneaker.getSneakerType());
+        List<Sneakers> sneakerList = sneakersDao.getAll();
         assertEquals(2, sneakerList.size());
     }
 
@@ -79,12 +79,12 @@ public class Sql2oSneakersDaoTest {
         Sneakers sneaker2 = newSneaks();
         sneakersDao.add(sneaker1);
         sneakersDao.add(sneaker2);
-        Shoes shoes = new Shoes("Nike", "Black", 9.5, 100);
+        Shoes shoes = new Shoes("Nike", "Black", 9.5, 100, "shoes");
         shoesDao.add(shoes);
         String sneakertype = sneaker1.getSneakerType();
         sneakersDao.deleteAllSneakers(sneakertype);
         assertEquals(1, shoesDao.getAll().size());
-        assertEquals(0, sneakersDao.getAll(sneakertype).size());
+        assertEquals(0, sneakersDao.getAll().size());
     }
 
     @Test
@@ -98,7 +98,7 @@ public class Sql2oSneakersDaoTest {
     }
 
     public Sneakers newSneaks(){
-        return new Sneakers("Nike", "Tacos", 9.5, 200.0, true,"Dunks" );
+        return new Sneakers("Nike", "Tacos", 9.5, 200.0, true,"Dunks", "sneakers" );
     }
 
 }

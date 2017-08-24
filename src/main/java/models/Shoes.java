@@ -11,19 +11,22 @@ public class Shoes {
     private Double price;
     private int id;
     private LocalDateTime createdAt;
+    private String type;
 
-    public Shoes(String brand, String shoeColor, double shoeSize, double price){
+    public Shoes(String brand, String shoeColor, double shoeSize, double price, String type){
         this.brand = brand;
         this.shoeColor = shoeColor;
         this.shoeSize = shoeSize;
         this.price = price;
         this.createdAt = LocalDateTime.now();
+        this.type = type;
     }
 
     //GETTTERS
     public String getBrand() {
         return brand;
     }
+    public String getType(){return type; }
     public String getShoeColor() {
         return shoeColor;
     }
@@ -44,6 +47,7 @@ public class Shoes {
     public void setBrand(String brand) {
         this.brand = brand;
     }
+    public void setType(String type) {this.type = type; }
     public void setShoeColor(String shoeColor) {
         this.shoeColor = shoeColor;
     }
@@ -58,6 +62,7 @@ public class Shoes {
     }
     //Equals and Hashcode
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -65,22 +70,20 @@ public class Shoes {
 
         Shoes shoes = (Shoes) o;
 
-        if (Double.compare(shoes.shoeSize, shoeSize) != 0) return false;
-        if (Double.compare(shoes.price, price) != 0) return false;
         if (!brand.equals(shoes.brand)) return false;
-        return shoeColor.equals(shoes.shoeColor);
+        if (!shoeColor.equals(shoes.shoeColor)) return false;
+        if (!shoeSize.equals(shoes.shoeSize)) return false;
+        if (!price.equals(shoes.price)) return false;
+        return type.equals(shoes.type);
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = brand.hashCode();
+        int result = brand.hashCode();
         result = 31 * result + shoeColor.hashCode();
-        temp = Double.doubleToLongBits(shoeSize);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(price);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + shoeSize.hashCode();
+        result = 31 * result + price.hashCode();
+        result = 31 * result + type.hashCode();
         return result;
     }
 }
